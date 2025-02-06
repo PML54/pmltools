@@ -1,0 +1,61 @@
+# Configuration générale de l'application
+app:
+  name: "appspml"
+  lib_dir: "lib"
+
+# Configuration de l'analyseur
+analyzer:
+  source_root: "lib"
+  excluded:
+    dirs:
+      - lib/generated
+    files:
+      - .freezed.dart
+      - .g.dart
+      - _test.dart
+  database:
+    dir: "pmlutils/database"
+    name: "appspml.db"
+    cleanup_on_start: true
+    schema_file: "db_schema.dart"
+    backup_dir: "pmlutils/database/backups"
+
+# Configuration des outils d'analyse
+tools:
+  # Outils Dart internes (dans lib/)
+  core:
+    source_dir: "lib/pmlcore"
+    main_script: "analyze_project.dart"
+
+  # Outils externes (à la racine)
+  utils:
+    root_dir: "pmlutils"
+
+    # Scripts divers (shell, bash, etc.)
+    scripts:
+      dir: "pmlutils/scripts"
+      shell:
+        setup: "setup.sh"
+        analyze: "analyze.sh"
+      automation:
+        update_docs: "update_documentation.sh"
+
+    # Configuration Python
+    python:
+      source_dir: "pmlutils/python"
+      scripts:
+        - analyze_dart.py
+        - schema_doc_analyzer.py
+      requirements: "pmlutils/python/requirements.txt"
+
+# Configuration de la sortie
+output:
+  doc_dir: "pmlutils/output/doc"
+  reports_dir: "pmlutils/output/reports"
+  temp_dir: "pmlutils/output/temp"
+
+# Configuration des logs
+logging:
+  level: "info"  # debug, info, warning, error
+  file: "pmlutils/logs/analysis.log"
+  console: true  # Afficher aussi dans la console
